@@ -1,4 +1,4 @@
-.game-background {
+#game-background {
     margin: auto;
     padding: 0;
     display: block;
@@ -34,4 +34,11 @@
     top: 190px;
     left: 290px;
     border-radius: 100%;
+}
+
+button {
+    position: fixed;
+    bottom: 0%;
+    left: 48%;
+    margin-bottom: 5%;
 }
