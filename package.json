@@ -1,0 +1,23 @@
+{
+  "name": "pong",
+  "version": "1.0.0",
+  "description": "This game aims to let two players on different computers play pong together on the web browser",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/opedro-c/pong.git"
+  },
+  "keywords": [],
+  "author": "Pedro COsta",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/opedro-c/pong/issues"
+  },
+  "homepage": "https://github.com/opedro-c/pong#readme",
+  "dependencies": {
+    "socket.io": "^4.6.1"
+  }
+}
