@@ -8,35 +8,19 @@
     <title>Pong</title>
     <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"
+        integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+"
+        crossorigin="anonymous"></script>
+    <script defer src="script.js"></script>
 </head>
 
 <body>
-    <div id="game-background">
+    <!-- <div id="game-background">
         <div id="player-left" class="racket"></div>
         <div id="player-right" class="racket"></div>
         <div id="ball"></div>
     </div>
-    <button id="playButton">PLAY</button>
+    <button id="playButton">PLAY</button> -->
 </body>
 
-<script type="module">
-    import { io } from "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
-    
-    const socket = io('ws://127.0.0.1:3000')
-
-    let racket = document.getElementById('player-left')
-    let gameBackground = document.getElementById('game-background')
-    let playButton = document.getElementById('playButton') 
-    
-    function moveRacket(e) {
-        racket.style.top = e.offsetY + 'px'
-    }
-
-    function startGame() {
-        socket.emit('message', 'i want to start game!')
-    }
-    
-    playButton.addEventListener('click', startGame)
-    gameBackground.addEventListener('mousemove', moveRacket)
-</script>
 </html>
