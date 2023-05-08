@@ -17,6 +17,7 @@
     "url": "https://github.com/opedro-c/pong/issues"
   },
   "homepage": "https://github.com/opedro-c/pong#readme",
+  "type": "module",
   "dependencies": {
     "socket.io": "^4.6.1"
   }
