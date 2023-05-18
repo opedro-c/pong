@@ -35,6 +35,8 @@ var options = {
 
 var playerHeight = 50
 var playerWidth = 10
+var playerAPoints = 0
+var playerBPoints = 0
 
 // create two boxes and a ground
 var ball = Bodies.circle(renderer.options.width / 2, renderer.options.height / 2, 10, options)
@@ -86,12 +88,37 @@ Events.on(engine, 'beforeUpdate', function(event) {
     var playerBPosition = playerB.position
     var ballPosition = ball.position
     if (ballPosition.y < playerBPosition.y) {
-        Matter.Body.setPosition(playerB, { x: playerBPosition.x, y: playerBPosition.y - 5 })
+        Body.setPosition(playerB, { x: playerBPosition.x, y: playerBPosition.y - 5 })
     } else if (ballPosition.y > playerBPosition.y) {
-        Matter.Body.setPosition(playerB, { x: playerBPosition.x, y: playerBPosition.y + 5 })
+        Body.setPosition(playerB, { x: playerBPosition.x, y: playerBPosition.y + 5 })
     }
-    Matter.Body.setPosition(playerA, { x: playerA.position.x, y: mouseY })
+    Body.setPosition(playerA, { x: playerA.position.x, y: mouseY })
 })
+
+var resetBallPosition = () => {
+    Body.setPosition(ball, {
+        x: renderer.options.width / 2,
+        y: renderer.options.height / 2
+    })
+}
+
+Events.on(engine, 'collisionStart', function(event) {
+    var pairs = event.pairs;
+
+    for (var i = 0; i < pairs.length; i++) {
+        var pair = pairs[i];
+
+        if (pair.bodyA === ball && pair.bodyB === rightWall) {
+            playerAPoints++;
+            console.log('playerAPoints=' + playerAPoints)
+            resetBallPosition()
+        } else if (pair.bodyA === ball && pair.bodyB === leftWall) {
+            playerBPoints++;
+            console.log('playerBPoints=' + playerBPoints)
+            resetBallPosition()
+        }
+    }
+});
 
 Body.applyForce(ball, {x: ball.position.x, y: ball.position.y}, {x: 0.003, y: 0.003})
 
