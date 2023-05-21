@@ -17,9 +17,21 @@ io.on('connection', (socket) => {
     } else if (io.engine.clientsCount == 2) {
         socket.emit('side', 'right')
         playerB.socket = socket
+        Body.applyForce(ball, {x: ball.position.x, y: ball.position.y}, {x: 0.003, y: 0.003})
+        // run the engine
+        Runner.run(runner, engine)
     } else {
         socket.disconnect()
     }
+
+    socket.on('playerMove', (data) => {
+        var side = data.side
+        if (side == 'left') {
+            Body.setPosition(racketA, {x: racketA.position.x, y: data.position})
+        } else if (side == 'right') {
+            Body.setPosition(racketB, {x: racketB.position.x, y: data.position})
+        }
+    })
     console.log('number of connections=' + io.engine.clientsCount);
 })
 
@@ -54,22 +66,20 @@ var playerWidth = 10
 // create two boxes and a ground
 var ball = Bodies.circle(screenWidth / 2, screenHeight / 2, 10, options)
 options.isStatic = true
-var racketA = Bodies.rectangle(20, 200, playerWidth, playerHeight, options)
+var racketA = Bodies.rectangle(10, 200, playerWidth, playerHeight, options)
 var racketB = Bodies.rectangle(780, 50, playerWidth, playerHeight, options)
-var ground = Bodies.rectangle(400, 610, 810, 30, options)
-var floor = Bodies.rectangle(400, 0, 810, 10, options)
-var leftWall = Bodies.rectangle(0, 300, 20, 590, options)
-var rightWall = Bodies.rectangle(800, 300, 20, 590, options)
+var ground = Bodies.rectangle(400, 600, 800, 1, options)
+var ceiling = Bodies.rectangle(400, 0, 800, 1, options)
+var leftWall = Bodies.rectangle(0, 300, 1, 600, options)
+var rightWall = Bodies.rectangle(800, 300, 1, 600, options)
 
 // Atualiza a posição da raquete B com base na posição da bola
 Events.on(engine, 'beforeUpdate', function(event) {
-    var racketBPosition = racketB.position
-    var ballPosition = ball.position
-    if (ballPosition.y < racketBPosition.y) {
-        Body.setPosition(racketB, { x: racketBPosition.x, y: racketBPosition.y - 20 })
-    } else if (ballPosition.y > racketBPosition.y) {
-        Body.setPosition(racketB, { x: racketBPosition.x, y: racketBPosition.y + 20 })
-    }
+    io.emit('state', {
+        ball: ball.position,
+        left: {position: racketA.position.y, score: playerA.getScore()},
+        right: {position: racketB.position.y, score: playerB.getScore()}
+    })
 })
 
 var resetBallPosition = () => {
@@ -97,14 +107,8 @@ Events.on(engine, 'collisionStart', function(event) {
     }
 });
 
-Body.applyForce(ball, {x: ball.position.x, y: ball.position.y}, {x: 0.003, y: 0.003})
-
-
 // add all of the bodies to the world
-Composite.add(engine.world, [playerA, playerB, ball, floor, ground, rightWall, leftWall])
+Composite.add(engine.world, [racketA, racketB, ball, ceiling, ground, rightWall, leftWall])
 
 // create runner
 var runner = Runner.create()
-
-// run the engine
-Runner.run(runner, engine)
