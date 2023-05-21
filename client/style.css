@@ -1,4 +1,7 @@
 body {
+    font-family: sans-serif;
+    font-size: 40px;
+    font-weight: bolder;
     margin: auto;
     padding: 0;
     display: block;
@@ -7,38 +10,12 @@ body {
     left: 0;
     right: 0;
     position: absolute;
-    width: 600px;
-    height: 400px;
+    width: 800px;
+    height: 600px;
 }
-
-
-#player-left {
-    background-color: blue;
-    width: 10px;
-    height: 50px;
-    position: absolute;
-    top: 150px;
-}
-
-#player-right {
-    background-color: red;
-    left: 590px;
-}
-
-#ball {
-    display: block;
-    width: 10px;
-    height: 10px;
-    background-color: white;
-    position: absolute;
-    top: 190px;
-    left: 290px;
-    border-radius: 100%;
-}
-
-button {
-    position: fixed;
-    bottom: 0%;
-    left: 48%;
-    margin-bottom: 5%;
+.score {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    align-content: center;
 }

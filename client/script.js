@@ -2,6 +2,8 @@ var socket = io('127.0.0.1:3000')
 var playerSide
 var oponentPosition = 0
 var racketY = 0
+var scoreLeft = document.getElementById('score-left')
+var scoreRight = document.getElementById('score-right')
 
 socket.on('side', function(data) {
     playerSide = data
@@ -12,6 +14,8 @@ socket.on('state', (data) => {
     oponentPosition = (playerSide == 'left') ? data.right.position : data.left.position
     ballX = data.ball.x
     ballY = data.ball.y
+    scoreLeft.innerText = 'Red: ' + data.left.score
+    scoreRight.innerText = 'Blue: ' + data.right.score
 })
 
 // Obtém o elemento canvas e o contexto 2D
