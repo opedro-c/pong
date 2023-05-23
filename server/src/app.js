@@ -8,6 +8,7 @@ const playerA = new Player('left'),
 
 const io = new Server(3000, {
     cors: { origin: '*' },
+
 })
 
 io.on('connection', (socket) => {
@@ -63,7 +64,7 @@ var options = {
 var playerHeight = 50
 var playerWidth = 10
 
-// create two boxes and a ground
+
 var ball = Bodies.circle(screenWidth / 2, screenHeight / 2, 10, options)
 options.isStatic = true
 var racketA = Bodies.rectangle(10, 200, playerWidth, playerHeight, options)
@@ -73,7 +74,7 @@ var ceiling = Bodies.rectangle(400, 0, 800, 1, options)
 var leftWall = Bodies.rectangle(0, 300, 1, 600, options)
 var rightWall = Bodies.rectangle(800, 300, 1, 600, options)
 
-// Atualiza a posição da raquete B com base na posição da bola
+
 Events.on(engine, 'beforeUpdate', function(event) {
     io.emit('state', {
         ball: ball.position,
